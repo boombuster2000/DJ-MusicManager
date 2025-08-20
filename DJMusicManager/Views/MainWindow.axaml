@@ -15,14 +15,27 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <DockPanel>
-        <!-- This is the sidebar -->
-        <Rectangle Fill="Blue" Width="100" DockPanel.Dock="Left" />
-        
-        <!-- This is the where songs in folder will be displayed -->
-        <Rectangle Fill="Red"
-                   HorizontalAlignment="Stretch" 
-                   VerticalAlignment="Stretch"/>
-    </DockPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Starting width for sidebar, but resizable -->
+            <ColumnDefinition Width="200" />
+            <!-- The splitter itself -->
+            <ColumnDefinition Width="10" />
+            <!-- Main content fills the rest -->
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Blue sidebar -->
+        <Rectangle Fill="Blue" Grid.Column="0" />
+
+        <!-- Horizontal-only splitter -->
+        <GridSplitter Grid.Column="1"
+                      Background="Gray"
+                      ResizeDirection="Columns"
+                      HorizontalAlignment="Stretch" />
+
+        <!-- Red main content -->
+        <Rectangle Fill="Red" Grid.Column="2" />
+    </Grid>
 
 </Window>
