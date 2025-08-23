@@ -1,10 +1,19 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20">
+        <Border Padding="20"  Background="{DynamicResource SecondaryBackground}" Width="200"> 
             <!-- Add Controls for Previewer Here -->
+            <Button Content="Select Folder" />
         </Border>
     </Design.PreviewWith>
-
+        
     <!-- Add Styles Here -->
+    <Style Selector="Button">
+        <Setter Property="Background" Value="{DynamicResource PrimaryButton}"></Setter>
+    </Style>
+    
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource PrimaryButtonHover}"></Setter>
+        
+    </Style>
 </Styles>

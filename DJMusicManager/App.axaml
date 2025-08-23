@@ -16,6 +16,10 @@
     </Application.Styles>
              
      <Application.Resources>
+         <SolidColorBrush x:Key="PrimaryButton">Brown</SolidColorBrush>
+         <SolidColorBrush x:Key="PrimaryButtonHover">#CC3636</SolidColorBrush>
+         
+         
          <SolidColorBrush x:Key="PrimaryBackground">#141514</SolidColorBrush>
          <SolidColorBrush x:Key="SecondaryBackground">#1E1F1E</SolidColorBrush>
          <SolidColorBrush x:Key="Trim">#2a2b2a</SolidColorBrush>
