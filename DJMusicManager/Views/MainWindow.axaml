@@ -15,15 +15,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <!-- Starting width for sidebar, but resizable -->
-            <ColumnDefinition Width="200" />
-            <!-- The splitter itself -->
-            <ColumnDefinition Width="10" />
-            <!-- Main content fills the rest -->
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid ColumnDefinitions="200,10,*">
 
         <!-- Blue sidebar -->
         <Rectangle Fill="{DynamicResource SecondaryBackground}" Grid.Column="0" />
