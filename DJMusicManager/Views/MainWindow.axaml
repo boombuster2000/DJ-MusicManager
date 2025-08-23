@@ -19,10 +19,25 @@
 
         <!-- Blue sidebar -->
         <Border Background="{DynamicResource SecondaryBackground}">
-            <StackPanel>
-                
-                <Button Content="Select Folder"></Button>
-            </StackPanel>
+            <Grid RowDefinitions="*,Auto">
+
+                <TreeView Grid.Row="0" ItemsSource="{Binding SelectedFolder.SubFolders}">
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate ItemsSource="{Binding SubFolders}">
+                            <TextBlock Text="{Binding Name}"/>
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+
+                <Button Grid.Row="1" HorizontalAlignment="Right" Margin="5" Height="30">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <PathIcon Width="14.5" Data="{DynamicResource OpenFolderRegular}" />
+                        <TextBlock Text="Select Folder"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+
         </Border>
 
         <!-- Horizontal-only splitter -->
