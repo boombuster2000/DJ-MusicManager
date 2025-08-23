@@ -1,20 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace DJMusicManager.Models;
 
-public class Folder(string rootPath)
+public class Folder
 {
-    public string Name { get; } = Path.GetFileName(rootPath);
-    private string FullPath { get; } = rootPath ?? throw new ArgumentNullException(nameof(rootPath));
-    public List<Folder> SubFolders { get; } = new();
-    public List<Mp3File> Mp3Files { get; } = new();
+    public string Name { get; }
+    private string FullPath { get; }
+    
+    public ObservableCollection<Folder> SubFolders { get; } = [];
+    public ObservableCollection<Mp3File> Mp3Files { get; } = [];
 
     private bool _isLoaded;
 
-    public async Task LoadAsync()
+    public Folder()
+    {
+        Name = "";
+        FullPath = "";
+    }
+    
+    public Folder(string rootPath)
+    {
+        Name = Path.GetFileName(rootPath);
+        FullPath = rootPath ?? throw new ArgumentNullException(nameof(rootPath));
+        _ = LoadAsync();
+    }
+
+    private async Task LoadAsync()
     {
         if (_isLoaded) return; // only load once
         _isLoaded = true;
