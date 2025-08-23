@@ -18,7 +18,12 @@
     <Grid ColumnDefinitions="200,10,*">
 
         <!-- Blue sidebar -->
-        <Rectangle Fill="{DynamicResource SecondaryBackground}" Grid.Column="0" />
+        <Border Background="{DynamicResource SecondaryBackground}">
+            <StackPanel>
+                
+                <Button Content="Select Folder"></Button>
+            </StackPanel>
+        </Border>
 
         <!-- Horizontal-only splitter -->
         <GridSplitter Grid.Column="1"
