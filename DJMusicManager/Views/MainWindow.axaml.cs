@@ -14,13 +14,13 @@ public partial class MainWindow : Window
 
     private async void SelectFolderAsync_OnClick(object? sender, RoutedEventArgs e)
     {
-        var folders = await StorageProvider.OpenFolderPickerAsync(
+        var selectedFolders = await StorageProvider.OpenFolderPickerAsync(
             new FolderPickerOpenOptions
             {
                 Title = "Select a Folder",
                 AllowMultiple = false
             });
         
-        _ = (DataContext as MainWindowViewModel)?.LoadSelectedFolderCommand(folders);
+        _ = (DataContext as MainWindowViewModel)?.LoadSelectedFolderCommand(selectedFolders);
     }
 }
