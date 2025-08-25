@@ -15,12 +15,6 @@ public class Folder
     public ObservableCollection<Mp3File> Mp3Files { get; } = [];
 
     private bool _isLoaded;
-
-    public Folder()
-    {
-        Name = "";
-        FullPath = "";
-    }
     
     public Folder(string rootPath)
     {
