@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DJMusicManager.Models;
@@ -11,7 +12,7 @@ public class Folder
     public string Name { get; }
     private string FullPath { get; }
     
-    public ObservableCollection<Folder> SubFolders { get; } = [];
+    public ObservableCollection<Folder> SubFolders { get; set; } = [];
     public ObservableCollection<Mp3File> Mp3Files { get; } = [];
 
     private bool _isLoaded;
@@ -38,6 +39,12 @@ public class Folder
             // Add subfolders as empty shells — not loading their contents yet
             foreach (var subDir in Directory.GetDirectories(FullPath))
                 SubFolders.Add(new Folder(subDir));
+
+            var sorted = SubFolders.OrderBy(f => f.Name).ToList();
+
+            SubFolders.Clear();
+            foreach (var folder in sorted)
+                SubFolders.Add(folder);
         });
     }
 }
