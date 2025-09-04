@@ -49,8 +49,3 @@
 
 - Use Rider IDE for the best experience.
 
----
-
-## 📌 License
-
-This project is open source and free for anyone to use.
