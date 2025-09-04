@@ -72,4 +72,11 @@ public class Folder
         foreach (var folder in subFolders)
             SubFolders.Add(folder);
     }
+
+    public void LoadMp3s()
+    {
+        foreach (var mp3File in Mp3Files)
+            mp3File.LoadMetaData();
+        
+    }
 }
