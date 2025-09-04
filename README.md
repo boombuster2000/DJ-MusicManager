@@ -30,7 +30,7 @@
 1. Clone the repository:
    
    ```bash
-   git clone https://github.com/yourusername/DJ-MusicManager.git
+   git clone https://github.com/boombuster2000/DJ-MusicManager.git
    ```
    
 2. Open the project in [JetBrains Rider](https://www.jetbrains.com/rider/). *(recommended, free license available)*
