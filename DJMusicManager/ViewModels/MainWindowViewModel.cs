@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,11 +9,16 @@ namespace DJMusicManager.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty] public partial Folder SelectedFolder { get; private set; } =  new Folder();
-
-
     /// <summary>
-    /// Updates <see cref="SelectedFolder"/> with new selected folder which updates the UI.
+    /// The folder that's currently loaded.
+    /// </summary>
+    [ObservableProperty] public partial Folder LoadedFolder { get; private set; } =  new Folder();
+
+
+    [ObservableProperty] public partial Folder SelectedFolder { get; set; } = new Folder();
+    
+    /// <summary>
+    /// Updates <see cref="LoadedFolder"/> with new selected folder which updates the UI.
     /// </summary>
     /// <param name="selectedFolders">The selected folders from the user/pop-up window.</param>
     /// <returns></returns>
@@ -24,9 +27,16 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (selectedFolders.Count <= 0) return Task.CompletedTask;
         
-        SelectedFolder = new Folder(selectedFolders[0].TryGetLocalPath() ?? string.Empty);
+        LoadedFolder = new Folder(selectedFolders[0].TryGetLocalPath() ?? string.Empty);
         
         return Task.CompletedTask;
+    }
+
+
+    [RelayCommand]
+    public void LoadMp3MetaDataCommand()
+    {
+        SelectedFolder.LoadMp3s();
     }
 
 }
