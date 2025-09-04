@@ -4,7 +4,7 @@
 [![Avalonia UI](https://img.shields.io/badge/Avalonia-UI-blue)](https://avaloniaui.net/)  
 ![Status](https://img.shields.io/badge/Status-In%20Development-orange)
 
-**DJ-MusicManager** is a music management tool for DJs, designed to help organize music by creating folders for playlists and editing MP3 metadata directly. It also displays song information like BPM and genre to make managing your library easier.  
+**DJ-MusicManager** is a cross platform music management tool for DJs, designed to help organize music by creating folders for playlists and editing MP3 metadata directly. It also displays song information like BPM and genre to make managing your library easier.  
 
 ---
 
