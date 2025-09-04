@@ -26,25 +26,19 @@ public class Folder
 
     private async Task LoadAsync()
     {
-        if (_isLoaded) return; // only load once
+        if (_isLoaded) return;
         _isLoaded = true;
 
-        // Run on background thread so UI stays responsive
-        await Task.Run(() =>
-        {
-            // Add MP3 files
-            foreach (var mp3Path in Directory.GetFiles(FullPath, "*.mp3"))
-                Mp3Files.Add(new Mp3File(mp3Path));
+        // Gather file system info in background
+        var mp3s = await Task.Run(() => Directory.GetFiles(FullPath, "*.mp3"));
+        var subDirs = await Task.Run(() => Directory.GetDirectories(FullPath));
 
-            // Add subfolders as empty shells — not loading their contents yet
-            foreach (var subDir in Directory.GetDirectories(FullPath))
-                SubFolders.Add(new Folder(subDir));
+        // Now update collections on the UI thread
+        foreach (var mp3Path in mp3s)
+            Mp3Files.Add(new Mp3File(mp3Path));
 
-            var sorted = SubFolders.OrderBy(f => f.Name).ToList();
-
-            SubFolders.Clear();
-            foreach (var folder in sorted)
-                SubFolders.Add(folder);
-        });
+        var subFolders = subDirs.Select(d => new Folder(d)).OrderBy(f => f.Name);
+        foreach (var folder in subFolders)
+            SubFolders.Add(folder);
     }
 }
