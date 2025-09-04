@@ -17,10 +17,11 @@
 
     <Grid ColumnDefinitions="200,10,*">
 
-        <!-- Blue sidebar -->
+        <!-- Sidebar -->
         <Border Background="{DynamicResource SecondaryBackground}">
             <Grid RowDefinitions="*,Auto">
-
+                
+                <!-- Displays selected hierarchy subfolders.  -->
                 <TreeView Grid.Row="0" ItemsSource="{Binding SelectedFolder.SubFolders}">
                     <TreeView.ItemTemplate>
                         <TreeDataTemplate ItemsSource="{Binding SubFolders}">
@@ -28,7 +29,8 @@
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
                 </TreeView>
-
+                
+                <!-- The button to select new folder -->
                 <Button Grid.Row="1" HorizontalAlignment="Right" Margin="5" Height="30" Click="SelectFolderAsync_OnClick">
                     <StackPanel Orientation="Horizontal" Spacing="5">
                         <PathIcon Width="14.5" Data="{DynamicResource OpenFolderRegular}" />
@@ -46,7 +48,7 @@
                       ResizeDirection="Columns"
                       HorizontalAlignment="Stretch" />
 
-        <!-- Red main content -->
+        <!-- Main content -->
         <Rectangle Fill="{DynamicResource Trim}" Grid.Column="2" />
     </Grid>
 

@@ -12,6 +12,11 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Opens native folder picker and then triggers the command <see cref="MainWindowViewModel.LoadSelectedFolderCommand"/>.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void SelectFolderAsync_OnClick(object? sender, RoutedEventArgs e)
     {
         var selectedFolders = await StorageProvider.OpenFolderPickerAsync(

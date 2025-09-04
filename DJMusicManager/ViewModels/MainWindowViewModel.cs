@@ -14,6 +14,11 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] public partial Folder SelectedFolder { get; private set; } =  new Folder();
 
 
+    /// <summary>
+    /// Updates <see cref="SelectedFolder"/> with new selected folder which updates the UI.
+    /// </summary>
+    /// <param name="selectedFolders">The selected folders from the user/pop-up window.</param>
+    /// <returns></returns>
     [RelayCommand]
     public Task LoadSelectedFolderCommand(IReadOnlyList<IStorageFolder> selectedFolders)
     {

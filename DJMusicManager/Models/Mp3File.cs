@@ -4,11 +4,34 @@ namespace DJMusicManager.Models;
 
 public class Mp3File(string filePath)
 {
-    private string FilePath { get; } = filePath ?? throw new ArgumentNullException(nameof(filePath));
+    /// <summary>
+    /// This is the file-path of the mp3 file.
+    /// </summary>
+    private string FilePath { get; } = filePath;
+    
+    /// <summary>
+    /// This is the title of the mp3 file.
+    /// </summary>
     public string? Title { get; set; }
+    
+    /// <summary>
+    /// The artists that are part of the song.
+    /// </summary>
     public string[]? Artists { get; set; }
+    
+    /// <summary>
+    /// How long the song is.
+    /// </summary>
     public TimeSpan Duration { get; private set; }
+    
+    /// <summary>
+    /// The genres of the song would fit into.
+    /// </summary>
     public string[]? Genres { get; set; }
+    
+    /// <summary>
+    /// The bpm of the song.
+    /// </summary>
     public double? Bpm { get; set; }
 
     public void LoadMetaData()
