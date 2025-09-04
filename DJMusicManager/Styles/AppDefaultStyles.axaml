@@ -1,11 +1,24 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20"  Background="{DynamicResource SecondaryBackground}" Width="200"> 
-            <!-- Add Controls for Previewer Here -->
-            <Button Content="Select Folder" />
+        <Border Padding="20" Background="{DynamicResource SecondaryBackground}" Width="250">
+            <TreeView>
+                <TreeViewItem Header="Documents">
+                    <TreeViewItem Header="Reports" />
+                    <TreeViewItem Header="Invoices" />
+                </TreeViewItem>
+                <TreeViewItem Header="Pictures">
+                    <TreeViewItem Header="Vacations" />
+                    <TreeViewItem Header="Family" />
+                </TreeViewItem>
+                <TreeViewItem Header="Music">
+                    <TreeViewItem Header="Rock" />
+                    <TreeViewItem Header="Jazz" />
+                </TreeViewItem>
+            </TreeView>
         </Border>
     </Design.PreviewWith>
+
         
     <!-- Add Styles Here -->
     <Style Selector="Button">
@@ -20,5 +33,12 @@
     
     <Style Selector="PathIcon">
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextForeground}" />
+    </Style>
+    
+    <Style Selector="TreeViewItem">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="MinHeight" Value="16"/>
     </Style>
 </Styles>
