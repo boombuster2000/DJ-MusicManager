@@ -51,16 +51,11 @@
 
         <!-- Main content -->
         <Border Grid.Column="2" Background="{DynamicResource PrimaryBackground}">
-            <ListBox ItemsSource="{Binding SelectedFolder.Mp3Files}" SelectionMode="Single">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="Auto, Auto">
-                            <TextBlock Grid.Column="0" Text="{Binding Title}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Bpm}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <DataGrid Margin="0" ItemsSource="{Binding SelectedFolder.Mp3Files}" 
+                      AutoGenerateColumns="True" IsReadOnly="True" 
+                      GridLinesVisibility="All"
+                      BorderThickness="0" BorderBrush="Gray">
+            </DataGrid>
         </Border>
     </Grid>
 
