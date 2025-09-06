@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
-using TagLib;
 
 namespace DJMusicManager.Models;
 
 public partial class Mp3File(string filePath) : ObservableObject
 {
-    private bool _isMetaDataLoaded = false;
+    private bool _isMetaDataLoaded;
     
     /// <summary>
     /// This is the file-path of the mp3 file.
@@ -79,7 +76,7 @@ public partial class Mp3File(string filePath) : ObservableObject
             Genres = file.Tag.Genres;
             Bpm = file.Tag.BeatsPerMinute;
         }
-        catch (TagLib.CorruptFileException e)
+        catch (TagLib.CorruptFileException)
         {
             Title = $"Corrupt - {this.FilePath}";
         }

@@ -18,7 +18,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] public partial Folder SelectedFolder { get; set; } = new Folder();
     partial void OnSelectedFolderChanged(Folder value)
     {
-        _ = SelectedFolder.LoadMp3sParallelAsync();
+        _ = value.LoadMp3sParallelAsync();
     }
     
     /// <summary>

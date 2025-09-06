@@ -1,9 +1,6 @@
-using System;
-using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using DJMusicManager.Models;
 using DJMusicManager.ViewModels;
 
 namespace DJMusicManager.Views;
