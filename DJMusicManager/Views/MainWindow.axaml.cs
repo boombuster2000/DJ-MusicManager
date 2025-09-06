@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -15,7 +16,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Opens native folder picker and then triggers the command <see cref="MainWindowViewModel.LoadSelectedFolderCommand"/>.
+    /// Opens native folder picker and then triggers the command <see cref="MainWindowViewModel.LoadFolderCommand"/>.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -28,20 +29,7 @@ public partial class MainWindow : Window
                 AllowMultiple = false
             });
         
-        _ = (DataContext as MainWindowViewModel)?.LoadSelectedFolderCommand(selectedFolders);
+        _ = (DataContext as MainWindowViewModel)?.LoadFolderCommand(selectedFolders);
     }
-
-    private void TreeView_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        if (e.AddedItems.Count <= 0) return;
-        // Get the first newly selected item
-        var selected = e.AddedItems[0];
-
-        // If your items are of type Folder
-        if (selected is Folder folder)
-        {
-            (DataContext as MainWindowViewModel)?.LoadMp3MetaDataCommand();
-        }
-
-    }
+    
 }
