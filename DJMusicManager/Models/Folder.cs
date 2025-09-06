@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -73,10 +71,12 @@ public class Folder
             SubFolders.Add(folder);
     }
 
-    public void LoadMp3s()
+    public async Task LoadMp3sParallelAsync()
     {
-        foreach (var mp3File in Mp3Files)
-            mp3File.LoadMetaData();
-        
+        await Parallel.ForEachAsync(Mp3Files, new ParallelOptions { MaxDegreeOfParallelism = 4 },
+            async (mp3, token) =>
+            {
+                await Task.Run(mp3.LoadMetaData, token);
+            });
     }
 }
