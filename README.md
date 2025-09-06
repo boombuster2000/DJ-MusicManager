@@ -35,7 +35,11 @@
    
 2. Open the project in [JetBrains Rider](https://www.jetbrains.com/rider/). *(recommended, free license available)*
 
-3. Build and run the project.
+3. Install [Avalonia Extension](https://avaloniaui.net/gettingstarted) for selected IDE.
+
+4. [Install Avalonia Templates and troubleshoot installation](https://docs.avaloniaui.net/docs/get-started/install)
+
+5. Build and run the project.
 
 ---
 
