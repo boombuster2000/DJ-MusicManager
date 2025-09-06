@@ -24,8 +24,7 @@
                 <!-- Displays selected hierarchy subfolders.  -->
                 <TreeView Grid.Row="0" 
                           ItemsSource="{Binding LoadedFolder.SubFolders}"
-                          SelectedItem="{Binding SelectedFolder, Mode=TwoWay}"
-                          SelectionChanged="TreeView_OnSelectionChanged">
+                          SelectedItem="{Binding SelectedFolder, Mode=TwoWay}">
                     <TreeView.ItemTemplate>
                         <TreeDataTemplate ItemsSource="{Binding SubFolders}">
                             <TextBlock Text="{Binding Name}"/>
@@ -52,9 +51,22 @@
         <!-- Main content -->
         <Border Grid.Column="2" Background="{DynamicResource PrimaryBackground}">
             <DataGrid Margin="0" ItemsSource="{Binding SelectedFolder.Mp3Files}" 
-                      AutoGenerateColumns="True" IsReadOnly="True" 
+                      AutoGenerateColumns="False" IsReadOnly="False" 
                       GridLinesVisibility="All"
                       BorderThickness="0" BorderBrush="Gray">
+                
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title"
+                                        Binding="{Binding Title}"/>
+                    
+                    <DataGridTextColumn Header="BPM"
+                                        Binding="{Binding Bpm}" />
+                    
+                    <DataGridTextColumn Header="Artists"
+                                        Binding="{Binding ArtistsString, 
+                                        Mode=TwoWay, 
+                                        UpdateSourceTrigger=LostFocus}" />
+                </DataGrid.Columns>
             </DataGrid>
         </Border>
     </Grid>
