@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
+using TagLib;
 
 namespace DJMusicManager.Models;
 
 public partial class Mp3File(string filePath) : ObservableObject
 {
+    private bool _isMetaDataLoaded = false;
+    
     /// <summary>
     /// This is the file-path of the mp3 file.
     /// </summary>
@@ -17,11 +23,25 @@ public partial class Mp3File(string filePath) : ObservableObject
     public partial string? Title { get; set; }
     
     /// <summary>
-    /// The artists that are part of the song.
+    /// The string version of the artists that are part of the song.
     /// </summary>
-    ///
     [ObservableProperty]
-    public partial string[]? Artists { get; set; }
+    public partial string? ArtistsString { get; set; }
+    
+    partial void OnArtistsStringChanged(string? value)
+    {
+        if (!_isMetaDataLoaded) return;
+        if (value == null) return;
+        
+        Debug.Print("Setting artists.");
+        SetArtists();
+    }
+    
+    /// <summary>
+    /// Array of artists performed in song, taken from <see cref="ArtistsString"/> and split with ";".
+    /// <remarks> Artists should be seperated by ";" for it to be recognised as separate artists.</remarks>
+    /// </summary>
+    private string[]? ArtistsArray => ArtistsString?.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
     
     /// <summary>
     /// How long the song is.
@@ -40,19 +60,52 @@ public partial class Mp3File(string filePath) : ObservableObject
     /// </summary>
     [ObservableProperty]
     public partial double? Bpm { get; set; }
-
+    
+    
     public void LoadMetaData()
     {
-        var file = TagLib.File.Create(FilePath);
-        Title = file.Tag.Title;
+        if (_isMetaDataLoaded) return;
         
-        // If performers exist, split names into separate elements
-        // By default it does not split artists names into individual elements.
-        Artists = file.Tag.Performers is { Length: > 0 } ? file.Tag.Performers[0].Split(", ") : [];
+        try
+        {
+            using var file = TagLib.File.Create(this.FilePath);
+            Title = file.Tag.Title;
 
-        Duration = file.Properties.Duration;
-        Genres = file.Tag.Genres;
-        Bpm = file.Tag.BeatsPerMinute;
+            // Different Artists should be seperated using ";".
+            // Users may have seperated artists using "," and therefore will be seen as 1 artist.
+            ArtistsString = file.Tag.JoinedPerformers;
 
+            Duration = file.Properties.Duration;
+            Genres = file.Tag.Genres;
+            Bpm = file.Tag.BeatsPerMinute;
+        }
+        catch (TagLib.CorruptFileException e)
+        {
+            Title = $"Corrupt - {this.FilePath}";
+        }
+        catch (Exception e)
+        {
+            Debug.Print($"Failed to load {this.FilePath}: {e.Message}");
+        }
+        
+        _isMetaDataLoaded = true;
+        
+    }
+
+    private void SetArtists()
+    {
+        try
+        {
+            using var file = TagLib.File.Create(FilePath);
+            file.Tag.Performers = ArtistsArray;
+            file.Save();
+        }
+        catch (Exception ex)
+        {
+            // handle errors (e.g. file locked, permissions)
+            Debug.Print($"Failed to save artists to {this.FilePath}: {ex.Message}");
+            ArtistsString = null;
+        }
+        
     }
 }
