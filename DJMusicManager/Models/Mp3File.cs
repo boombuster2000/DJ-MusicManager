@@ -12,33 +12,28 @@ public partial class Mp3File(string filePath) : ObservableObject
     /// This is the file-path of the mp3 file.
     /// </summary>
     private string FilePath { get; } = filePath;
+    
 
     /// <summary>
     /// This is the title of the mp3 file.
     /// </summary>
     [ObservableProperty]
     public partial string? Title { get; set; }
-
     partial void OnTitleChanged(string? value)
     {
         if (!_isMetaDataLoaded) return;
-        
         WriteTitleToFile();
-        
-        
     }
+    
     
     /// <summary>
     /// The string version of the artists that are part of the song.
     /// </summary>
     [ObservableProperty]
     public partial string? ArtistsString { get; set; }
-    
     partial void OnArtistsStringChanged(string? value)
     {
         if (!_isMetaDataLoaded) return;
-        
-        Debug.Print("Setting artists.");
         WriteArtistsToFile();
     }
     
@@ -47,6 +42,7 @@ public partial class Mp3File(string filePath) : ObservableObject
     /// <remarks> Artists should be seperated by ";" for it to be recognised as separate artists.</remarks>
     /// </summary>
     private string[]? ArtistsArray => ArtistsString?.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+    
     
     /// <summary>
     /// How long the song is.
@@ -58,8 +54,16 @@ public partial class Mp3File(string filePath) : ObservableObject
     /// The genres of the song would fit into.
     /// </summary>
     [ObservableProperty]
-    public partial string[]? Genres { get; set; }
+    public partial string? GenresString { get; set; }
+
+    partial void OnGenresStringChanged(string? value)
+    {
+        if (!_isMetaDataLoaded) return;
+        WriteGenresToFile();
+    }
     
+    private string[]? Genres => GenresString?.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
     /// <summary>
     /// The bpm of the song.
     /// </summary>
@@ -79,9 +83,9 @@ public partial class Mp3File(string filePath) : ObservableObject
             // Different Artists should be seperated using ";".
             // Users may have seperated artists using "," and therefore will be seen as 1 artist.
             ArtistsString = file.Tag.JoinedPerformers;
+            GenresString = file.Tag.JoinedGenres;
 
             Duration = file.Properties.Duration;
-            Genres = file.Tag.Genres;
             Bpm = file.Tag.BeatsPerMinute;
         }
         catch (TagLib.CorruptFileException)
@@ -125,6 +129,21 @@ public partial class Mp3File(string filePath) : ObservableObject
         {
             Debug.Print($"Failed to save title to {this.FilePath}: {e.Message}");
             Title = null;
+        }
+    }
+
+    private void WriteGenresToFile()
+    {
+        try
+        {
+            using var file = TagLib.File.Create(FilePath);
+            file.Tag.Genres = Genres;
+            file.Save();
+        }
+        catch (Exception e)
+        {
+            Debug.Print($"Failed to save genres to {this.FilePath}: {e.Message}");
+            GenresString = null;
         }
     }
 }
