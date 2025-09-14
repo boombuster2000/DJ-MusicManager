@@ -18,6 +18,15 @@ public partial class Mp3File(string filePath) : ObservableObject
     /// </summary>
     [ObservableProperty]
     public partial string? Title { get; set; }
+
+    partial void OnTitleChanged(string? value)
+    {
+        if (!_isMetaDataLoaded) return;
+        
+        WriteTitleToFile();
+        
+        
+    }
     
     /// <summary>
     /// The string version of the artists that are part of the song.
@@ -28,10 +37,9 @@ public partial class Mp3File(string filePath) : ObservableObject
     partial void OnArtistsStringChanged(string? value)
     {
         if (!_isMetaDataLoaded) return;
-        if (value == null) return;
         
         Debug.Print("Setting artists.");
-        SetArtists();
+        WriteArtistsToFile();
     }
     
     /// <summary>
@@ -89,7 +97,7 @@ public partial class Mp3File(string filePath) : ObservableObject
         
     }
 
-    private void SetArtists()
+    private void WriteArtistsToFile()
     {
         try
         {
@@ -97,12 +105,26 @@ public partial class Mp3File(string filePath) : ObservableObject
             file.Tag.Performers = ArtistsArray;
             file.Save();
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
             // handle errors (e.g. file locked, permissions)
-            Debug.Print($"Failed to save artists to {this.FilePath}: {ex.Message}");
+            Debug.Print($"Failed to save artists to {this.FilePath}: {e.Message}");
             ArtistsString = null;
         }
-        
+    }
+
+    private void WriteTitleToFile()
+    {
+        try
+        {
+            using var file = TagLib.File.Create(FilePath);
+            file.Tag.Title = Title;
+            file.Save();
+        }
+        catch (Exception e)
+        {
+            Debug.Print($"Failed to save title to {this.FilePath}: {e.Message}");
+            Title = null;
+        }
     }
 }
