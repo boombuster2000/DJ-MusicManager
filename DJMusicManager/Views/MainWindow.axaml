@@ -57,7 +57,9 @@
                 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title"
-                                        Binding="{Binding Title}"/>
+                                        Binding="{Binding Title,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=LostFocus}"/>
                     
                     <DataGridTextColumn Header="BPM"
                                         Binding="{Binding Bpm}" />
@@ -66,6 +68,13 @@
                                         Binding="{Binding ArtistsString, 
                                         Mode=TwoWay, 
                                         UpdateSourceTrigger=LostFocus}" />
+                    
+                    <DataGridTextColumn Header="Genres"
+                                        Binding="{Binding GenresString,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=LostFocus}"/>
+                    
+                    
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
