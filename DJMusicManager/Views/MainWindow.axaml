@@ -30,6 +30,12 @@
                             <TextBlock Text="{Binding Name}"/>
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
+                    
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Create New Playlist"/>
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
                 </TreeView>
                 
                 <!-- The button to select new folder -->
