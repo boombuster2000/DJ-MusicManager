@@ -27,7 +27,13 @@
                           SelectedItem="{Binding SelectedFolder, Mode=TwoWay}">
                     <TreeView.ItemTemplate>
                         <TreeDataTemplate ItemsSource="{Binding SubFolders}">
-                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Name}">
+                                <TextBlock.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Rename" />
+                                    </ContextMenu>
+                                </TextBlock.ContextMenu>
+                            </TextBlock>
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
                     
